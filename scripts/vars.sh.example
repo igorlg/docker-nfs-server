@@ -1,0 +1,8 @@
+IMAGE_PREFIX="__example__"
+IMAGE_NAME="nfs-server"
+IMAGE_VERSION="latest"
+
+CONTAINER_NAME="$IMAGE_NAME"
+
+VOLUME_DATA_PATH="/local/path/to/nfs/share"
+
