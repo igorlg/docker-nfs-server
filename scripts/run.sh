@@ -2,20 +2,23 @@
 
 source ./scripts/vars.sh
 
-# if [[ `docker ps -aq -f name=$CONTAINER_NAME | wc -l` == "1" ]]; then
-# 	docker kill $CONTAINER_NAME
-# 	docker rm $CONTAINER_NAME
-# fi
+for i in $VOLUME_MOUNT_PATHS; do
+	mounts="$mounts -v $i"
+	targets="$targets $(echo $i | cut -d ':' -f 2)"
+done
 
 docker run \
 	--privileged \
 	--detach \
 	--restart=unless-stopped \
 	--name $IMAGE_NAME \
-	--publish "2049:2049" \
-	--publish "20048:20048" \
-	-v "${VOLUME_DATA_PATH}:/exports" \
-	"$IMAGE_PREFIX/$IMAGE_NAME:$IMAGE_VERSION"
+	--publish "$CONTAINER_PORT_NFS:2049" \
+	--publish "$CONTAINER_PORT_MOUNTD:20048" \
+	$mounts \
+	"$IMAGE_PREFIX/$IMAGE_NAME:$IMAGE_VERSION" \
+	$targets
 
 docker ps -a
+
+docker exec nfs-server exportfs -v
 

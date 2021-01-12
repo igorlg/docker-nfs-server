@@ -3,6 +3,8 @@ IMAGE_NAME="nfs-server"
 IMAGE_VERSION="latest"
 
 CONTAINER_NAME="$IMAGE_NAME"
+CONTAINER_PORT_NFS="2049"
+CONTAINER_PORT_MOUNTD="20048"
 
-VOLUME_DATA_PATH="/local/path/to/nfs/share"
+VOLUME_MOUNT_PATHS="/local/path/to/nfs/share:/path/in/container"
 

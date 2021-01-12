@@ -35,6 +35,7 @@ function start()
         fi
         echo "Serving $i"
     done
+    cat /etc/exports
 
     # start rpcbind if it is not started yet
     /usr/sbin/rpcinfo 127.0.0.1 > /dev/null; s=$?
